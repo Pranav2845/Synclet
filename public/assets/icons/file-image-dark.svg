@@ -1,0 +1,14 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circle background -->
+  <circle cx="32" cy="32" r="32" fill="#333F4E"></circle>
+  
+  <!-- Folder/Image-like icon -->
+  <path d="M20 44H44C46.2091 44 48 42.2091 48 40V24C48 21.7909 46.2091 20 44 20H20C17.7909 20 16 21.7909 16 24V40C16 42.2091 17.7909 44 20 44Z" fill="#A3B2C7"></path>
+  
+  <!-- Small "sun" circle in corner -->
+  <circle cx="25" cy="28" r="3" fill="#333F4E"></circle>
+  
+  <!-- Mountains shape -->
+  <path d="M20 40L28 32L36 40H20Z" fill="#333F4E"></path>
+  <path d="M32 40L40 34L44 40H32Z" fill="#333F4E"></path>
+</svg>

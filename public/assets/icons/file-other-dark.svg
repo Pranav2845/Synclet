@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Dark circle background -->
+  <circle cx="32" cy="32" r="32" fill="#333F4E"></circle>
+  <!-- Glyph -->
+  <g fill="#E5E7EB">
+    <!-- donut shape -->
+    <path d="M32 20c6.627 0 12 5.373 12 12s-5.373 12-12 12-12-5.373-12-12c0-2.209 1.791-4 4-4s4 1.791 4 4a4 4 0 1 0 4-4c-2.209 0-4-1.791-4-4s1.791-4 4-4z"></path>
+    <!-- detached dot (top right) -->
+    <circle cx="42" cy="22" r="4"></circle>
+  </g>
+</svg>

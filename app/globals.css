@@ -463,3 +463,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.dark img.summary-type-icon[src$="file-document-light.svg"] {
+  content: url("/assets/icons/file-document-dark.svg");
+}
+.dark img.summary-type-icon[src$="file-image-light.svg"] {
+  content: url("/assets/icons/file-image-dark.svg");
+}
+.dark img.summary-type-icon[src$="file-video-light.svg"] {
+  content: url("/assets/icons/file-video-dark.svg");
+}
+.dark img.summary-type-icon[src$="file-other-light.svg"] {
+  content: url("/assets/icons/file-other-dark.svg");
+}
