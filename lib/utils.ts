@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
 export const parseStringify = (value: unknown) =>
   JSON.parse(JSON.stringify(value));
 
@@ -60,7 +61,6 @@ export const getFileType = (fileName: string) => {
     "sketch",
     "afdesign",
     "afphoto",
-    "afphoto",
   ];
   const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "svg", "webp"];
   const videoExtensions = ["mp4", "avi", "mov", "mkv", "webm"];
@@ -113,67 +113,88 @@ export const formatDateTime = (isoString: string | null | undefined) => {
 export const getFileIcon = (
   extension: string | undefined,
   type: FileType | string,
+  theme?: "light" | "dark",
 ) => {
-  switch (extension) {
-    // Document
-    case "pdf":
-      return "/assets/icons/file-pdf.svg";
-    case "doc":
-      return "/assets/icons/file-doc.svg";
-    case "docx":
-      return "/assets/icons/file-docx.svg";
-    case "csv":
-      return "/assets/icons/file-csv.svg";
-    case "txt":
-      return "/assets/icons/file-txt.svg";
-    case "xls":
-    case "xlsx":
-      return "/assets/icons/file-document.svg";
-    // Image
-    case "svg":
-      return "/assets/icons/file-image.svg";
-    // Video
-    case "mkv":
-    case "mov":
-    case "avi":
-    case "wmv":
-    case "mp4":
-    case "flv":
-    case "webm":
-    case "m4v":
-    case "3gp":
-      return "/assets/icons/file-video.svg";
-    // Audio
-    case "mp3":
-    case "mpeg":
-    case "wav":
-    case "aac":
-    case "flac":
-    case "ogg":
-    case "wma":
-    case "m4a":
-    case "aiff":
-    case "alac":
-      return "/assets/icons/file-audio.svg";
+  const isDark =
+    theme
+      ? theme === "dark"
+      : typeof window !== "undefined" &&
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    default:
-      switch (type) {
-        case "image":
-          return "/assets/icons/file-image.svg";
-        case "document":
-          return "/assets/icons/file-document.svg";
-        case "video":
-          return "/assets/icons/file-video.svg";
-        case "audio":
-          return "/assets/icons/file-audio.svg";
-        default:
-          return "/assets/icons/file-other.svg";
-      }
-  }
+  const withDarkVariant = new Set([
+    "file-document",
+    "file-image",
+    "file-video",
+    "file-other",
+  ]);
+
+  const icon = (() => {
+    switch (extension) {
+      // Document
+      case "pdf":
+        return "file-pdf";
+      case "doc":
+        return "file-doc";
+      case "docx":
+        return "file-docx";
+      case "csv":
+        return "file-csv";
+      case "txt":
+        return "file-txt";
+      case "xls":
+      case "xlsx":
+        return "file-document";
+      // Image
+      case "svg":
+        return "file-image";
+      // Video
+      case "mkv":
+      case "mov":
+      case "avi":
+      case "wmv":
+      case "mp4":
+      case "flv":
+      case "webm":
+      case "m4v":
+      case "3gp":
+        return "file-video";
+      // Audio
+      case "mp3":
+      case "mpeg":
+      case "wav":
+      case "aac":
+      case "flac":
+      case "ogg":
+      case "wma":
+      case "m4a":
+      case "aiff":
+      case "alac":
+        return "file-audio";
+
+      default:
+        switch (type) {
+          case "image":
+            return "file-image";
+          case "document":
+            return "file-document";
+          case "video":
+            return "file-video";
+          case "audio":
+            return "file-audio";
+          default:
+            return "file-other";
+        }
+    }
+  })();
+
+  const iconName =
+    isDark && withDarkVariant.has(icon) ? `${icon}-dark` : icon;
+
+  return `/assets/icons/${iconName}.svg`;
 };
 
 // APPWRITE URL UTILS
-// Construct appwrite file URL - https://appwrite.io/docs/apis/rest#images
 export const constructFileUrl = (bucketFileId: string) => {
   return `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET}/files/${bucketFileId}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT}`;
 };
@@ -183,20 +204,20 @@ export const constructDownloadUrl = (bucketFileId: string) => {
 };
 
 // DASHBOARD UTILS
-export const getUsageSummary = (totalSpace: any) => {
+export const getUsageSummary = (totalSpace: any, theme?: "light" | "dark") => {
   return [
     {
       title: "Documents",
       size: totalSpace.document.size,
       latestDate: totalSpace.document.latestDate,
-      icon: "/assets/icons/file-document-light.svg",
+      icon: getFileIcon(undefined, "document", theme),
       url: "/documents",
     },
     {
       title: "Images",
       size: totalSpace.image.size,
       latestDate: totalSpace.image.latestDate,
-      icon: "/assets/icons/file-image-light.svg",
+      icon: getFileIcon(undefined, "image", theme),
       url: "/images",
     },
     {
@@ -206,14 +227,14 @@ export const getUsageSummary = (totalSpace: any) => {
         totalSpace.video.latestDate > totalSpace.audio.latestDate
           ? totalSpace.video.latestDate
           : totalSpace.audio.latestDate,
-      icon: "/assets/icons/file-video-light.svg",
+      icon: getFileIcon(undefined, "video", theme),
       url: "/media",
     },
     {
       title: "Others",
       size: totalSpace.other.size,
       latestDate: totalSpace.other.latestDate,
-      icon: "/assets/icons/file-other-light.svg",
+      icon: getFileIcon(undefined, "other", theme),
       url: "/others",
     },
   ];

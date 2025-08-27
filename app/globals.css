@@ -218,8 +218,12 @@
     @apply relative mt-6 rounded-[20px] bg-white dark:bg-dark-100 p-5 transition-all hover:scale-105 !important;
   }
   .summary-type-icon {
-    @apply absolute -left-3 top-[-25px] z-10 w-[190px] object-contain !important;
-  }
+  @apply relative z-10 w-12 h-12 object-contain shrink-0 !important; /* 48×48 */
+}
+/* (optional) slightly smaller on very small screens */
+@screen sm {
+  .summary-type-icon { @apply w-10 h-10; } /* 40×40 */
+}
   .summary-type-size {
     @apply h4 relative z-20 w-full text-right text-dark-200 dark:text-light-200 !important;
   }
@@ -464,15 +468,3 @@
   }
 }
 
-.dark img.summary-type-icon[src$="file-document-light.svg"] {
-  content: url("/assets/icons/file-document-dark.svg");
-}
-.dark img.summary-type-icon[src$="file-image-light.svg"] {
-  content: url("/assets/icons/file-image-dark.svg");
-}
-.dark img.summary-type-icon[src$="file-video-light.svg"] {
-  content: url("/assets/icons/file-video-dark.svg");
-}
-.dark img.summary-type-icon[src$="file-other-light.svg"] {
-  content: url("/assets/icons/file-other-dark.svg");
-}
